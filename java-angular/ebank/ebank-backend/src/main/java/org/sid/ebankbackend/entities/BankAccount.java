@@ -19,13 +19,15 @@ import java.util.List;
  *      Séparation des tables. Avantage: Pas de trous dans la table et inconvenients: recherches sur
  *      plusieurs tables, pas ouf coté performance, répétition de la mm structure des tables.
  *      Donc on l'utilise quand y'a une grande diff entre les tables
- *      Pour cette partie on doit ajouter abstract
  * 3) Joined Table
  *      On crée 3 tables:
  *      -   Une pour les champs communs, BankAccount par exemple
  *      -   Les 2 autres, chaqu'une garde ses attributs specifiques
  *          par exemple CurrentAccount(overDraft, id_BankAccount) et SavingAccount(interestRate, id_BankAccount)
  *          Le id_BankAccount c pour linker les tables: table(BankAccount) ------> CurrentAccount et SavingAccount
+ *
+ *
+ *  Dans tous les cas on doit ajouter abstract
  */
 
 @Entity
@@ -44,6 +46,10 @@ public abstract class BankAccount {
     private String Currency;
     @ManyToOne
     private Customer customer;
-    @OneToMany(mappedBy = "bankAccount")
+    /**
+     *Dans OneToMany, pour charger toutes les données(les opérations ici), on utilise EAGER
+     * Sinon on laisse LAZY(qui est par default)
+     */
+    @OneToMany(mappedBy = "bankAccount",fetch = FetchType.EAGER)
     private List<AccountOperation> accountOperations;
 }

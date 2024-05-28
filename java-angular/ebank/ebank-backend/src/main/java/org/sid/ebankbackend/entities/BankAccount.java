@@ -19,6 +19,7 @@ import java.util.List;
  *      Séparation des tables. Avantage: Pas de trous dans la table et inconvenients: recherches sur
  *      plusieurs tables, pas ouf coté performance, répétition de la mm structure des tables.
  *      Donc on l'utilise quand y'a une grande diff entre les tables
+ *      Pour cette partie on doit ajouter abstract
  * 3) Joined Table
  *      On crée 3 tables:
  *      -   Une pour les champs communs, BankAccount par exemple
@@ -33,11 +34,12 @@ import java.util.List;
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "TYPE", length = 4, discriminatorType = DiscriminatorType.STRING)
-public class BankAccount {
+public abstract class BankAccount {
     @Id
     private String id;
     private double balance;//Le solde
     private Date createdAt;
+    @Enumerated(EnumType.STRING)
     private AccountStatus status;
     private String Currency;
     @ManyToOne

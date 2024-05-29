@@ -1,5 +1,6 @@
 package org.sid.ebankbackend;
 
+import org.sid.ebankbackend.dtos.CustomerDTO;
 import org.sid.ebankbackend.entities.*;
 import org.sid.ebankbackend.enums.AccountStatus;
 import org.sid.ebankbackend.enums.OperationType;
@@ -10,6 +11,7 @@ import org.sid.ebankbackend.repositories.AccountOperationRepository;
 import org.sid.ebankbackend.repositories.BankAccountRepository;
 import org.sid.ebankbackend.repositories.CustomerRepository;
 import org.sid.ebankbackend.services.BankAccountServiceImpl;
+import org.sid.ebankbackend.services.IBankAccountService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,10 +30,10 @@ public class EbankBackendApplication {
     }
 
     @Bean
-    CommandLineRunner commandLineRunner(BankAccountServiceImpl bankAccountService) {
+    CommandLineRunner commandLineRunner(IBankAccountService bankAccountService) {
         return args -> {
-            Stream.of("Hassan1", "Aicha1", "Duaa1", "Henriette1").forEach(name -> {
-                Customer customer = new Customer();
+            Stream.of("Hassatou", "Aicha", "Duaa", "Henriette").forEach(name -> {
+                CustomerDTO customer = new CustomerDTO();
                 customer.setName(name);
                 customer.setEmail(name + "gmail.fr");
                 bankAccountService.saveCustomer(customer);
@@ -53,10 +55,7 @@ public class EbankBackendApplication {
         };
     }
 
-    CommandLineRunner start(CustomerRepository customerRepository,
-                            AccountOperationRepository accountOperationRepository,
-                            BankAccountRepository bankAccountRepository
-    ) {
+    CommandLineRunner start(CustomerRepository customerRepository, AccountOperationRepository accountOperationRepository, BankAccountRepository bankAccountRepository) {
         return args -> {
             Stream.of("Hassan", "Aicha", "Duaa", "Henriette").forEach(name -> {
                 Customer customer = new Customer();

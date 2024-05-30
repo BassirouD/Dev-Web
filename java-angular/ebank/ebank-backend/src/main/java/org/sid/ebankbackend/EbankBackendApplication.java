@@ -45,22 +45,25 @@ public class EbankBackendApplication {
                 try {
                     bankAccountService.saveCurrentBankAccount(Math.random() * 9000, 9000, customer.getId());
                     bankAccountService.saveSavingBankAccount(Math.random() * 9000, 5.5, customer.getId());
-                    List<BankAccountDTO> bankAccountList = bankAccountService.bankAccountList();
-                    for (BankAccountDTO bankAccount : bankAccountList) {
-                        String accountId;
-                        if (bankAccount instanceof SavingBankAccountDTO) {
-                            accountId = ((SavingBankAccountDTO) bankAccount).getId();
-                        }else {
-                            accountId=((CurrentBankAccountDTO) bankAccount).getId();
-                        }
-                        bankAccountService.credit(accountId, Math.random() * 12000, "Credit to " + accountId);
-                        bankAccountService.debit(accountId, Math.random() * 1000, "Debit to " + accountId);
-                    }
 
-                } catch (CustomerNotFoundException | BankAccountNotFoundException | BalanceNotSufficientException e) {
+
+                } catch (CustomerNotFoundException e) {
                     e.printStackTrace();
                 }
             });
+            List<BankAccountDTO> bankAccountList = bankAccountService.bankAccountList();
+            for (BankAccountDTO bankAccount : bankAccountList) {
+                for (int i = 0; i < 10; i++) {
+                    String accountId;
+                    if (bankAccount instanceof SavingBankAccountDTO) {
+                        accountId = ((SavingBankAccountDTO) bankAccount).getId();
+                    } else {
+                        accountId = ((CurrentBankAccountDTO) bankAccount).getId();
+                    }
+                    bankAccountService.credit(accountId, Math.random() * 12000, "Credit to " + accountId);
+                    bankAccountService.debit(accountId, Math.random() * 1000, "Debit to " + accountId);
+                }
+            }
         };
     }
 

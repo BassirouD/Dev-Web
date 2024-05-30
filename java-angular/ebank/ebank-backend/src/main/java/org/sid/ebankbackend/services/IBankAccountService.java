@@ -1,6 +1,9 @@
 package org.sid.ebankbackend.services;
 
+import org.sid.ebankbackend.dtos.BankAccountDTO;
+import org.sid.ebankbackend.dtos.CurrentBankAccountDTO;
 import org.sid.ebankbackend.dtos.CustomerDTO;
+import org.sid.ebankbackend.dtos.SavingBankAccountDTO;
 import org.sid.ebankbackend.entities.BankAccount;
 import org.sid.ebankbackend.entities.CurrentAccount;
 import org.sid.ebankbackend.entities.Customer;
@@ -18,13 +21,13 @@ public interface IBankAccountService {
 
     void deleteCustomer(Long customerId);
 
-    CurrentAccount saveCurrentBankAccount(double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException;
+    CurrentBankAccountDTO saveCurrentBankAccount(double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException;
 
-    SavingAccount saveSavingBankAccount(double initialBalance, double interestRate, Long customerId) throws CustomerNotFoundException;
+    SavingBankAccountDTO saveSavingBankAccount(double initialBalance, double interestRate, Long customerId) throws CustomerNotFoundException;
 
     List<CustomerDTO> listCustomer();
 
-    BankAccount getBankAccount(String accountId) throws BankAccountNotFoundException;
+    BankAccountDTO getBankAccount(String accountId) throws BankAccountNotFoundException;
 
     void debit(String accountId, double amount, String description) throws BankAccountNotFoundException, BalanceNotSufficientException;
 
@@ -32,7 +35,7 @@ public interface IBankAccountService {
 
     void transfer(String accountIdSource, String accountIdDestination, double amount, String description) throws BankAccountNotFoundException, BalanceNotSufficientException;
 
-    List<BankAccount> bankAccountList();
+    List<BankAccountDTO> bankAccountList();
 
     CustomerDTO getCustomer(Long customerId) throws CustomerNotFoundException;
 }

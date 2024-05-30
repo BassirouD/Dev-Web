@@ -1,8 +1,9 @@
 package org.sid.ebankbackend;
 
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
-import io.swagger.v3.oas.annotations.info.Info;
+import org.sid.ebankbackend.dtos.BankAccountDTO;
+import org.sid.ebankbackend.dtos.CurrentBankAccountDTO;
 import org.sid.ebankbackend.dtos.CustomerDTO;
+import org.sid.ebankbackend.dtos.SavingBankAccountDTO;
 import org.sid.ebankbackend.entities.*;
 import org.sid.ebankbackend.enums.AccountStatus;
 import org.sid.ebankbackend.enums.OperationType;
@@ -44,10 +45,16 @@ public class EbankBackendApplication {
                 try {
                     bankAccountService.saveCurrentBankAccount(Math.random() * 9000, 9000, customer.getId());
                     bankAccountService.saveSavingBankAccount(Math.random() * 9000, 5.5, customer.getId());
-                    List<BankAccount> bankAccountList = bankAccountService.bankAccountList();
-                    for (BankAccount bankAccount : bankAccountList) {
-                        bankAccountService.credit(bankAccount.getId(), Math.random() * 12000, "Credit to " + bankAccount.getId());
-                        bankAccountService.debit(bankAccount.getId(), Math.random() * 1000, "Debit to " + bankAccount.getId());
+                    List<BankAccountDTO> bankAccountList = bankAccountService.bankAccountList();
+                    for (BankAccountDTO bankAccount : bankAccountList) {
+                        String accountId;
+                        if (bankAccount instanceof SavingBankAccountDTO) {
+                            accountId = ((SavingBankAccountDTO) bankAccount).getId();
+                        }else {
+                            accountId=((CurrentBankAccountDTO) bankAccount).getId();
+                        }
+                        bankAccountService.credit(accountId, Math.random() * 12000, "Credit to " + accountId);
+                        bankAccountService.debit(accountId, Math.random() * 1000, "Debit to " + accountId);
                     }
 
                 } catch (CustomerNotFoundException | BankAccountNotFoundException | BalanceNotSufficientException e) {

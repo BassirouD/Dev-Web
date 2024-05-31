@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {NgForOf, NgIf} from "@angular/common";
+import {CustomersService} from "../services/customers.service";
 
 @Component({
   selector: 'app-customers',
@@ -15,15 +16,16 @@ import {NgForOf, NgIf} from "@angular/common";
 export class CustomersComponent implements OnInit {
   customers: any
 
-  constructor(private http: HttpClient) {
+  constructor(private customerService: CustomersService) {
   }
 
   ngOnInit(): void {
-    this.http.get('http://localhost:8085/customers').subscribe(data => {
-      this.customers = data
-      console.log(data)
-    }, error => {
-      console.log(error)
+    this.customerService.getCustomers().subscribe({
+      next: (data) => {
+        this.customers = data;
+      }, error: err => {
+        console.log(err)
+      }
     })
   }
 }

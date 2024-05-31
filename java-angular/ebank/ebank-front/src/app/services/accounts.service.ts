@@ -13,7 +13,29 @@ export class AccountsService {
     }
 
     getAccount(accountId: string, page: number, size: number) {
-        return this.http.get<AccountDetails>(this.apiUrl + '/account/' + accountId + '/pageOperations?page=' + page + '&size=' + size)
+        return this.http.get<AccountDetails>(this.apiUrl + '/accounts/' + accountId + '/pageOperations?page=' + page + '&size=' + size)
     }
+
+    debit(accountId: string, amount: number, description: string) {
+        let data = {
+            'accountId': accountId, 'amount': amount, 'description': description
+        }
+        return this.http.post(this.apiUrl + '/accounts/debit', data)
+    }
+
+    credit(accountId: string, amount: number, description: string) {
+        let data = {
+            'accountId': accountId, 'amount': amount, 'description': description
+        }
+        return this.http.post(this.apiUrl + '/accounts/credit', data)
+    }
+
+    transfer(accountSource: string, accountDestinantion: string, amount: number, description: string) {
+        let data = {
+            accountSource, accountDestinantion, amount, description
+        }
+        return this.http.post(this.apiUrl + '/accounts/transfer', data)
+    }
+
 
 }

@@ -1,6 +1,6 @@
 <div class="container mt-2">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col col-md-6">
             <div class="card">
                 <div class="card-header">Accounts</div>
                 <div class="card-body">
@@ -42,7 +42,8 @@
                             </table>
                             <ul class="nav nav-pills">
                                 <li *ngFor="let item of [].constructor(accountDetails.totalPages);let page=index">
-                                    <a [ngClass]="page==currentPage?'btn-info':'btn-outline-info'" (click)="goToPage(page)"
+                                    <a [ngClass]="page==currentPage?'btn-info':'btn-outline-info'"
+                                       (click)="goToPage(page)"
                                        class="btn ms-1 mt-1">{{page}}</a>
                                 </li>
                             </ul>
@@ -51,8 +52,42 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-
+        <div class="col col-md-6">
+            <div class="card" *ngIf="accountObservable$">
+                <div class="card-header">Operations</div>
+                <div class="card-body">
+                    <form [formGroup]="operationFormGroup" (ngSubmit)="handleAccountOperation()" method="post">
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label">DEBIT</label>
+                            <input class="form-check-input" type="radio" formControlName="operationType" value="DEBIT">
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label">CREDIT</label>
+                            <input class="form-check-input" type="radio" formControlName="operationType" value="CREDIT">
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label">TRANSFER</label>
+                            <input class="form-check-input" type="radio" formControlName="operationType"
+                                   value="TRANSFER">
+                        </div>
+                        <div class="mb-3" *ngIf="operationFormGroup.value['operationType']=='TRANSFER'">
+                            <label class="form-label">Account Destination :</label>
+                            <input type="text" formControlName="accountDestination" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Amount :</label>
+                            <input type="text" formControlName="amount" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description :</label>
+                            <input type="text" formControlName="description" class="form-control">
+                        </div>
+                        <div class="d-grid">
+                            <button class="btn btn-success">Save Operation</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 

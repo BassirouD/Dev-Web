@@ -6,11 +6,12 @@ import {Customer} from "../models/customer.model";
   providedIn: 'root'
 })
 export class CustomersService {
+  private apiUrl = 'http://localhost:8085';
 
   constructor(private http: HttpClient) {
   }
 
   getCustomers() {
-    return this.http.get<Array<Customer>>('http://localhost:8085/customers/');
+    return this.http.get<Array<Customer>>(this.apiUrl + '/customers');
   }
 }

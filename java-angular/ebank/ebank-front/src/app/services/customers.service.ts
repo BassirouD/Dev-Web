@@ -11,6 +11,6 @@ export class CustomersService {
   }
 
   getCustomers() {
-    return this.http.get<Array<Customer>>('http://localhost:8085/customers');
+    return this.http.get<Array<Customer>>('http://localhost:8085/customers/');
   }
 }

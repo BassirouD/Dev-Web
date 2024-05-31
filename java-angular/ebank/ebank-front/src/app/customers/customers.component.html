@@ -14,7 +14,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let c of customers">
+        <tr *ngFor="let c of customers | async">
           <td>{{c.id}}</td>
           <td>{{c.name}}</td>
           <td>{{c.email}}</td>

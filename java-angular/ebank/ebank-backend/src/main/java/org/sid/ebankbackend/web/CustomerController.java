@@ -23,7 +23,12 @@ public class CustomerController {
 
     @GetMapping("/customers/search")
     public List<CustomerDTO> searchCustomers(@RequestParam(name = "keyword", defaultValue = "") String keyword) {
+        /**
+         * Le deuxieme return c si nous utilisons searchCustomer(de la repo avec @Query) qu'on utliser les "%" pour indiquer la
+         * postion des lettres à chercher
+         */
         return bankAccountService.searchCustomers(keyword);
+        //return bankAccountService.searchCustomers("%" + keyword + "%");
     }
 
 

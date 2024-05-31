@@ -1,20 +1,25 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {NgForOf, NgIf} from "@angular/common";
+import {JsonPipe, NgForOf, NgIf} from "@angular/common";
 import {CustomersService} from "../services/customers.service";
+import {Customer} from "../models/customer.model";
 
 @Component({
   selector: 'app-customers',
   standalone: true,
   imports: [
     NgForOf,
-    NgIf
+    NgIf,
+    JsonPipe
   ],
   templateUrl: './customers.component.html',
   styleUrl: './customers.component.css'
 })
 export class CustomersComponent implements OnInit {
-  customers: any
+  customers!: Customer[]
+  //errorMessage: string | undefined
+  errorMessage!: object
+
 
   constructor(private customerService: CustomersService) {
   }
@@ -24,6 +29,7 @@ export class CustomersComponent implements OnInit {
       next: (data) => {
         this.customers = data;
       }, error: err => {
+        this.errorMessage = err.message
         console.log(err)
       }
     })

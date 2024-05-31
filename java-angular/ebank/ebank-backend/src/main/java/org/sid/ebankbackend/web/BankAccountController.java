@@ -6,15 +6,13 @@ import org.sid.ebankbackend.dtos.AccountOperationDTO;
 import org.sid.ebankbackend.dtos.BankAccountDTO;
 import org.sid.ebankbackend.excecptions.BankAccountNotFoundException;
 import org.sid.ebankbackend.services.IBankAccountService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class BankAccountController {
     private IBankAccountService bankAccountService;
 

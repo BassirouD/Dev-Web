@@ -3,7 +3,6 @@ package org.sid.ebankbackend.web;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.sid.ebankbackend.dtos.CustomerDTO;
-import org.sid.ebankbackend.entities.Customer;
 import org.sid.ebankbackend.excecptions.CustomerNotFoundException;
 import org.sid.ebankbackend.services.IBankAccountService;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +12,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @Slf4j
+@CrossOrigin(origins = "http://localhost:4200")
 public class CustomerController {
     IBankAccountService bankAccountService;
 

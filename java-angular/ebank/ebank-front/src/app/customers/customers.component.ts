@@ -1,46 +1,86 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
 import {AsyncPipe, JsonPipe, NgForOf, NgIf} from "@angular/common";
 import {CustomersService} from "../services/customers.service";
 import {Customer} from "../models/customer.model";
-import {catchError, Observable, throwError} from "rxjs";
+import {catchError, map, Observable, throwError} from "rxjs";
+import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 
 @Component({
-  selector: 'app-customers',
-  standalone: true,
-  imports: [
-    NgForOf,
-    NgIf,
-    JsonPipe,
-    AsyncPipe
-  ],
-  templateUrl: './customers.component.html',
-  styleUrl: './customers.component.css'
+    selector: 'app-customers',
+    standalone: true,
+    imports: [
+        NgForOf,
+        NgIf,
+        JsonPipe,
+        AsyncPipe,
+        ReactiveFormsModule
+    ],
+    templateUrl: './customers.component.html',
+    styleUrl: './customers.component.css'
 })
 export class CustomersComponent implements OnInit {
-  //customers!: Customer[]
-  customers!: Observable<Customer[]>
-  //errorMessage: string | undefined
-  errorMessage!: object
+    //customers!: Customer[]
+    customers!: Observable<Customer[]>
+    //errorMessage: string | undefined
+    errorMessage!: object
+    searchFormGroup!: FormGroup
 
 
-  constructor(private customerService: CustomersService) {
-  }
+    constructor(private customerService: CustomersService, private fb: FormBuilder) {
+    }
 
-  ngOnInit(): void {
-    this.customers = this.customerService.getCustomers().pipe(
-      catchError(err => {
-        this.errorMessage=err.message
-        return throwError(() => new Error(`Invalid time ${ err.message }`))
-      })
-    );
-    /*this.customerService.getCustomers().subscribe({
-      next: (data) => {
-        this.customers = data;
-      }, error: err => {
-        this.errorMessage = err.message
-        console.log(err)
-      }
-    })*/
-  }
+    ngOnInit(): void {
+        this.searchFormGroup = this.fb.group({
+            keyword: this.fb.control("")
+        })
+        this.handleSearchCustomer()
+        /*
+        this.customers = this.customerService.getCustomers().pipe(
+            catchError(err => {
+                this.errorMessage = err.message
+                return throwError(() => new Error(`Invalid time ${err.message}`))
+            })
+        );
+        ====================================
+        this.customerService.getCustomers().subscribe({
+          next: (data) => {
+            this.customers = data;
+          }, error: err => {
+            this.errorMessage = err.message
+            console.log(err)
+          }
+        })*/
+    }
+
+    handleSearchCustomer() {
+        let keyword = this.searchFormGroup.value.keyword
+        this.customers = this.customerService.searchCustomers(keyword).pipe(
+            catchError(err => {
+                this.errorMessage = err.message
+                return throwError(() => new Error(err.message))
+            })
+        )
+
+    }
+
+    handleDeleteCustomer(customer: Customer) {
+        let conf = confirm('Are you sure?')
+        if (!conf) return;
+        let id = customer.id
+        this.customerService.deleteCustomer(id).subscribe({
+            next: () => {
+                this.customers = this.customers.pipe(
+                    map(data => {
+                        let index = data.indexOf(customer)
+                        data.slice(index, 1)
+                        return data;
+                    })
+                )
+                //this.handleSearchCustomer();
+                console.log('Delete')
+            }, error: err => {
+                console.log(err)
+            }
+        })
+    }
 }

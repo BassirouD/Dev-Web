@@ -38,7 +38,7 @@ public class EbankBackendApplication {
             Stream.of("Hassatou", "Aicha", "Duaa", "Henriette").forEach(name -> {
                 CustomerDTO customer = new CustomerDTO();
                 customer.setName(name);
-                customer.setEmail(name + "gmail.fr");
+                customer.setEmail(name + "@gmail.fr");
                 bankAccountService.saveCustomer(customer);
             });
             bankAccountService.listCustomer().forEach(customer -> {

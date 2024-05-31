@@ -1,35 +1,49 @@
 <div class="container mt-2">
-  <ng-container *ngIf="customers | async as listCustomer;else failureOrLoading" class="text-danger">
-    <div class="card">
-      <div class="card-header">Customers</div>
-      <div class="card-body">
-        <table class="table">
-          <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let c of customers | async">
-            <td>{{c.id}}</td>
-            <td>{{c.name}}</td>
-            <td>{{c.email}}</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </ng-container>
-  <ng-template #failureOrLoading>
-    <ng-container *ngIf="errorMessage; else loading">
-      <div class="text-danger">
-        {{errorMessage}}
-      </div>
+    <ng-container *ngIf="customers | async as listCustomer;else failureOrLoading" class="text-danger">
+        <div class="card">
+            <div class="card-header">Customers</div>
+            <div class="card-body">
+                <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchCustomer()">
+                    <div class="input-group">
+                        <label class="input-group-text">Keyword : </label>
+                        <input type="text" formControlName="keyword" class="form-control">
+                        <button class="btn btn-info">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </form>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let customer of customers | async">
+                        <td>{{customer.id}}</td>
+                        <td>{{customer.name}}</td>
+                        <td>{{customer.email}}</td>
+                        <td>
+                            <button (click)="handleDeleteCustomer(customer)" class="btn btn-danger">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </ng-container>
-    <ng-template #loading>
-      Loading .....
+    <ng-template #failureOrLoading>
+        <ng-container *ngIf="errorMessage; else loading">
+            <div class="text-danger">
+                {{errorMessage}}
+            </div>
+        </ng-container>
+        <ng-template #loading>
+            Loading .....
+        </ng-template>
     </ng-template>
-  </ng-template>
 </div>

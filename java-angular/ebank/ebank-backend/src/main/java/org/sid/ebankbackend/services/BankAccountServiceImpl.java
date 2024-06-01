@@ -222,4 +222,13 @@ public class BankAccountServiceImpl implements IBankAccountService {
         List<CustomerDTO> customerDTOS = customerList.stream().map(customer -> dtoMapper.fromCustomer(customer)).collect(Collectors.toList());
         return customerDTOS;
     }
+
+    @Override
+    public List<BankAccountDTO> getBankAccountsByCustomerId(Long customerID) {
+        List<BankAccount> bankAccountList = bankAccountRepository.getBankAccountByCustomerId(customerID);
+        List<BankAccountDTO> bankAccountDTOList = bankAccountList
+                .stream()
+                .map(bankAccount -> dtoMapper.fromBankAccount(bankAccount)).collect(Collectors.toList());
+        return bankAccountDTOList;
+    }
 }

@@ -1,13 +1,7 @@
 package org.sid.ebankbackend.mappers;
 
-import org.sid.ebankbackend.dtos.AccountOperationDTO;
-import org.sid.ebankbackend.dtos.CurrentBankAccountDTO;
-import org.sid.ebankbackend.dtos.CustomerDTO;
-import org.sid.ebankbackend.dtos.SavingBankAccountDTO;
-import org.sid.ebankbackend.entities.AccountOperation;
-import org.sid.ebankbackend.entities.CurrentAccount;
-import org.sid.ebankbackend.entities.Customer;
-import org.sid.ebankbackend.entities.SavingAccount;
+import org.sid.ebankbackend.dtos.*;
+import org.sid.ebankbackend.entities.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -68,5 +62,11 @@ public class BankAccountMapperImpl {
         AccountOperationDTO accountOperationDTO = new AccountOperationDTO();
         BeanUtils.copyProperties(accountOperation, accountOperationDTO);
         return accountOperationDTO;
+    }
+
+    public BankAccountDTO fromBankAccount(BankAccount bankAccount) {
+        BankAccountDTO bankAccountDTO = new BankAccountDTO();
+        BeanUtils.copyProperties(bankAccount, bankAccountDTO);
+        return bankAccountDTO;
     }
 }

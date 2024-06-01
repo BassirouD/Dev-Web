@@ -59,4 +59,9 @@ public class BankAccountController {
                 transferRequestDTO.getDescription());
     }
 
+    @GetMapping("/accounts/getByCustomerId/{customerId}")
+    public List<BankAccountDTO> getBankAccountsByCustomerId(@PathVariable Long customerId) {
+        return bankAccountService.getBankAccountsByCustomerId(customerId);
+    }
+
 }

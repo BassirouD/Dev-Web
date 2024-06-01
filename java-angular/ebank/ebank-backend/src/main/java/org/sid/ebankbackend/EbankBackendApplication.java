@@ -32,7 +32,7 @@ public class EbankBackendApplication {
         SpringApplication.run(EbankBackendApplication.class, args);
     }
 
-    @Bean
+    //@Bean
     CommandLineRunner commandLineRunner(IBankAccountService bankAccountService) {
         return args -> {
             Stream.of("Hassatou", "Aicha", "Duaa", "Henriette").forEach(name -> {

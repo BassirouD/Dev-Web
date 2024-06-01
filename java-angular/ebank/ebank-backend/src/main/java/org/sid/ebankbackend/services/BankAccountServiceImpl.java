@@ -143,9 +143,11 @@ public class BankAccountServiceImpl implements IBankAccountService {
 
     @Override
     public void credit(String accountId, double amount, String description) throws BankAccountNotFoundException {
+        System.out.println("°°°°°°°°°°°°°°°°accountId" + accountId);
         //BankAccount bankAccount = getBankAccount(accountId);
         BankAccount bankAccount = bankAccountRepository.findById(accountId)
                 .orElseThrow(() -> new BankAccountNotFoundException("Bank account not found"));
+        System.out.println("=================================" + bankAccount);
         AccountOperation accountOperation = new AccountOperation();
         accountOperation.setType(OperationType.CREDIT);
         accountOperation.setAmount(amount);
@@ -159,10 +161,10 @@ public class BankAccountServiceImpl implements IBankAccountService {
     }
 
     @Override
-    public void transfer(String accountIdSource, String accountIdDestination, double amount, String description) throws BankAccountNotFoundException, BalanceNotSufficientException {
-        debit(accountIdSource, amount, description);
-        credit(accountIdDestination, amount, description);
-        log.info("Tranfer from " + accountIdSource + " to " + accountIdDestination + " done with the amount " + amount + " at " + new Date());
+    public void transfer(String accountSource, String accountDestination, double amount, String description) throws BankAccountNotFoundException, BalanceNotSufficientException {
+        debit(accountSource, amount, description);
+        credit(accountDestination, amount, description);
+        log.info("Tranfer from " + accountSource + " to " + accountDestination + " done with the amount " + amount + " at " + new Date());
     }
 
     @Override
@@ -197,7 +199,7 @@ public class BankAccountServiceImpl implements IBankAccountService {
     public AccountHistoryDTO getAccountHistory(String accountId, int page, int size) throws BankAccountNotFoundException {
         BankAccount bankAccount = bankAccountRepository.findById(accountId).orElse(null);
         if (bankAccount == null) throw new BankAccountNotFoundException("Account not found");
-        Page<AccountOperation> accountOperations = accountOperationRepository.findByBankAccountId(accountId, PageRequest.of(page, size));
+        Page<AccountOperation> accountOperations = accountOperationRepository.findByBankAccountIdOrderByOperationDateDesc(accountId, PageRequest.of(page, size));
         AccountHistoryDTO accountHistoryDTO = new AccountHistoryDTO();
         List<AccountOperationDTO> accountOperationDTOS = accountOperations
                 .getContent()

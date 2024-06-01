@@ -30,10 +30,14 @@ export class AccountsService {
         return this.http.post(this.apiUrl + '/accounts/credit', data)
     }
 
-    transfer(accountSource: string, accountDestinantion: string, amount: number, description: string) {
+    transfer(accountSource: string, accountDestination: string, amount: number, description: string) {
         let data = {
-            accountSource, accountDestinantion, amount, description
+            'accountSource': accountSource,
+            'accountDestination': accountDestination,
+            'amount': amount,
+            'description': description
         }
+        console.log(data)
         return this.http.post(this.apiUrl + '/accounts/transfer', data)
     }
 

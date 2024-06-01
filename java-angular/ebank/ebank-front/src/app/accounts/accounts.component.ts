@@ -77,6 +77,7 @@ export class AccountsComponent implements OnInit {
                 }
             })
         } else if (operationType == 'TRANSFER') {
+            console.log(accountDestination)
             this.accountService.transfer(accountId, accountDestination, amount, description).subscribe({
                 next: (data) => {
                     alert('Success transfer')

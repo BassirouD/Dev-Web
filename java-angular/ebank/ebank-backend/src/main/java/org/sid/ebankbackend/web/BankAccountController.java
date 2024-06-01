@@ -50,7 +50,7 @@ public class BankAccountController {
         return creditDTO;
     }
 
-    @PostMapping("/accounts/tranfer")
+    @PostMapping("/accounts/transfer")
     public void transfer(@RequestBody TransferRequestDTO transferRequestDTO) throws BankAccountNotFoundException, BalanceNotSufficientException {
         bankAccountService.transfer(
                 transferRequestDTO.getAccountSource(),

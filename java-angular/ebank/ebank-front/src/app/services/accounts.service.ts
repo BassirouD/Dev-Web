@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {AccountDetails} from "../models/account.model";
+import {Account} from "../models/accountInfo.model";
 
 @Injectable({
     providedIn: 'root'
@@ -39,6 +40,10 @@ export class AccountsService {
         }
         console.log(data)
         return this.http.post(this.apiUrl + '/accounts/transfer', data)
+    }
+
+    getAccountsCustomer(customerId: number) {
+        return this.http.get<Account[]>(this.apiUrl + '/accounts/getByCustomerId/' + customerId)
     }
 
 

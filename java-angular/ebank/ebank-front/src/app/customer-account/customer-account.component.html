@@ -1,8 +1,33 @@
-<div class="container">
-    <div>
-        {{customerId}}
-    </div>
-    <div>
-        {{customer.name}}
+<div class="container mt-2">
+    <div class="card">
+        <div class="card-header">My Accounts</div>
+        <div class="card-body">
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Currency</th>
+                    <th>Balance</th>
+                    <th>Creation Date</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let account of accountsCustomer">
+                    <td>{{account.type}}</td>
+                    <td>{{account.status}}</td>
+                    <td>{{account.currency}}</td>
+                    <td>{{account.balance | number :'1.2-2'}}</td>
+                    <td>{{account.createdAt | date :'dd-MM-yyyy'}}</td>
+                    <td class="text-end">
+                        <button class="btn btn-warning">
+                            History
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

@@ -66,6 +66,8 @@ public class BankAccountMapperImpl {
 
     public BankAccountDTO fromBankAccount(BankAccount bankAccount) {
         BankAccountDTO bankAccountDTO = new BankAccountDTO();
+        bankAccountDTO.setType(bankAccount.getClass().getSimpleName());
+
         BeanUtils.copyProperties(bankAccount, bankAccountDTO);
         return bankAccountDTO;
     }

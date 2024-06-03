@@ -21,7 +21,7 @@
                     <td>{{account.balance | number :'1.2-2'}}</td>
                     <td>{{account.createdAt | date :'dd-MM-yyyy'}}</td>
                     <td class="text-end">
-                        <button class="btn btn-warning">
+                        <button (click)="handleGetAccountHistory(account.id)" class="btn btn-warning">
                             History
                         </button>
                     </td>

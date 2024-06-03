@@ -36,11 +36,13 @@ export class CustomerAccountComponent implements OnInit {
         this.accountSrv.getAccountsCustomer(customerId).subscribe({
             next: value => {
                 this.accountsCustomer = value
-                console.log(value)
             }, error: err => {
                 console.log(err)
             }
         })
     }
 
+    handleGetAccountHistory(accountId: string) {
+        this.router.navigateByUrl('/accounts/' + accountId)
+    }
 }

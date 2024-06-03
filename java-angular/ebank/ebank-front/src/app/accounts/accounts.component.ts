@@ -4,6 +4,7 @@ import {AccountsService} from "../services/accounts.service";
 import {catchError, Observable, throwError} from "rxjs";
 import {AccountDetails} from "../models/account.model";
 import {AsyncPipe, DatePipe, DecimalPipe, NgClass, NgForOf, NgIf} from "@angular/common";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
     selector: 'app-accounts',
@@ -26,14 +27,18 @@ export class AccountsComponent implements OnInit {
     currentPage: number = 0;
     pageSize: number = 5
     accountObservable$!: Observable<AccountDetails>;
-    errMessage: string = ''
+    errMessage: string = '';
+    accountId!: string
 
-    constructor(private fb: FormBuilder, private accountService: AccountsService) {
+    constructor(private fb: FormBuilder,
+                private accountService: AccountsService,
+                private route: ActivatedRoute) {
     }
 
     ngOnInit(): void {
+        this.accountId = this.route.snapshot.params['id'];
         this.accountFormGroup = this.fb.group({
-            accountId: ['']
+            accountId: [this.accountId]
         })
         this.operationFormGroup = this.fb.group({
             operationType: [''],
@@ -41,6 +46,7 @@ export class AccountsComponent implements OnInit {
             description: [''],
             accountDestination: [''],
         })
+        this.handleSearchAccount();
     }
 
     handleSearchAccount() {
@@ -83,7 +89,6 @@ export class AccountsComponent implements OnInit {
                 }
             })
         } else if (operationType == 'TRANSFER') {
-            console.log(accountDestination)
             this.accountService.transfer(accountId, accountDestination, amount, description).subscribe({
                 next: (data) => {
                     alert('Success transfer')

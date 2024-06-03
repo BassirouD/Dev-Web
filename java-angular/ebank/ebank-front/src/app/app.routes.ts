@@ -6,7 +6,7 @@ import {CustomerAccountComponent} from "./customer-account/customer-account.comp
 
 export const routes: Routes = [
     {path: 'customers', component: CustomersComponent},
-    {path: 'accounts', component: AccountsComponent},
+    {path: 'accounts/:id', component: AccountsComponent},
     {path: 'new-customer', component: NewCustomerComponent},
     {path: 'customer-account/:id', component: CustomerAccountComponent},
 ];

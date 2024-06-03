@@ -53,7 +53,7 @@ export class AccountsComponent implements OnInit {
         let accountId = this.accountFormGroup.value.accountId
         this.accountObservable$ = this.accountService.getAccount(accountId, this.currentPage, this.pageSize).pipe(
             catchError(err => {
-                this.errMessage = err.message
+                this.errMessage = err.error.message
                 return throwError(err)
             })
         )

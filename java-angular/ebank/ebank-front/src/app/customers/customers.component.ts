@@ -23,7 +23,7 @@ export class CustomersComponent implements OnInit {
     //customers!: Customer[]
     customers!: Observable<Customer[]>
     //errorMessage: string | undefined
-    errorMessage!: object
+    errorMessage!: ''
     searchFormGroup!: FormGroup
 
 
@@ -57,7 +57,7 @@ export class CustomersComponent implements OnInit {
         let keyword = this.searchFormGroup.value.keyword
         this.customers = this.customerService.searchCustomers(keyword).pipe(
             catchError(err => {
-                this.errorMessage = err.message
+                this.errorMessage = err.error.message
                 return throwError(() => new Error(err.message))
             })
         )

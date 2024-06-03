@@ -13,7 +13,10 @@
                     <div class="mb-3">
                         <ng-template #errorTemplate>
                             <ng-container *ngIf="errMessage; else loading">
-                                <div class="text-danger">
+                                <div class="text-danger" *ngIf="errMessage=='Failed to fetch'">
+                                    Server not available
+                                </div>
+                                <div class="text-danger" *ngIf="errMessage!='Failed to fetch'">
                                     {{errMessage}}
                                 </div>
                             </ng-container>
@@ -22,7 +25,7 @@
                             </ng-template>
                         </ng-template>
 
-                        <ng-container *ngIf="accountObservable$ | async as accountDetails">
+                        <ng-container *ngIf="accountObservable$ | async as accountDetails;else errorTemplate">
                             <div class="mb-2 mt-2">
                                 <label>Account Id : </label>
                                 <label><strong> {{accountDetails.accountId}}</strong></label>
@@ -75,7 +78,8 @@
                         </div>
                         <div class="form-check form-check-inline">
                             <label class="form-check-label">TRANSFER</label>
-                            <input class="form-check-input" type="radio" formControlName="operationType" value="TRANSFER">
+                            <input class="form-check-input" type="radio" formControlName="operationType"
+                                   value="TRANSFER">
                         </div>
                         <div class="mb-3" *ngIf="operationFormGroup.value['operationType']=='TRANSFER'">
                             <label class="form-label">Account Destination :</label>

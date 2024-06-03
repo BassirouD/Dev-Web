@@ -47,7 +47,10 @@
     </ng-container>
     <ng-template #failureOrLoading>
         <ng-container *ngIf="errorMessage; else loading">
-            <div class="text-danger">
+            <div class="text-danger" *ngIf="errorMessage=='Failed to fetch'">
+                Server not available
+            </div>
+            <div class="text-danger" *ngIf="errorMessage!='Failed to fetch'">
                 {{errorMessage}}
             </div>
         </ng-container>

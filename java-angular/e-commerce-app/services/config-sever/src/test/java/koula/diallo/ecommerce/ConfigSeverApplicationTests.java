@@ -1,4 +1,4 @@
-package koula.diallo.configsever;
+package koula.diallo.ecommerce;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

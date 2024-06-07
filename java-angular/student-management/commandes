@@ -1,0 +1,10 @@
+================Création du project angular========================
+==>ng new frontend-angular --directory=./ --no-standalone
+==>CSS
+==>(SSG/Prerendering)? No
+
+================Ajout de angular material========================
+==>ng add @angular/material
+==>Indigo/Pink
+==>Set up global Angular Material typography styles? Yes
+==>Include the Angular animations module? Include and enable animations

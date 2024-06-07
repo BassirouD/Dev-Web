@@ -1,4 +1,4 @@
-package koula.diallo.product;
+package koula.diallo.ecommerce;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -7,6 +7,7 @@ services:
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
+      POSTGRES_DB: postgres
       PGDATA: /var/lib/postgresql/data
     volumes:
       - postgres:/var/lib/postgresql/data
@@ -71,6 +72,7 @@ services:
 networks:
   microservices-net:
     driver: bridge
+    external: true
 
 volumes:
   postgres:

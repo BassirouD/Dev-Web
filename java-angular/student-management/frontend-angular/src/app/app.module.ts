@@ -9,7 +9,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatSidenavModule} from "@angular/material/sidenav";
-import {MatListItem, MatNavList} from "@angular/material/list";
+import {MatList, MatListItem, MatNavList} from "@angular/material/list";
 import {HomeComponent} from './home/home.component';
 import {ProfileComponent} from './profile/profile.component';
 import {LoginComponent} from './login/login.component';
@@ -45,27 +45,28 @@ import {AuthorizationGuard} from "./guards/authorization.guard";
     LoadStudentsComponent,
     LoadPaymentsComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatMenuModule,
-    MatSidenavModule,
-    MatNavList,
-    MatListItem,
-    MatCardModule,
-    MatDividerModule,
-    MatTableModule,
-    MatPaginator,
-    MatSort,
-    MatSortHeader,
-    MatInput,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatIconModule,
+        MatMenuModule,
+        MatSidenavModule,
+        MatNavList,
+        MatListItem,
+        MatCardModule,
+        MatDividerModule,
+        MatTableModule,
+        MatPaginator,
+        MatSort,
+        MatSortHeader,
+        MatInput,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MatList
+    ],
   providers: [
     AuthGuard, AuthorizationGuard
   ],

@@ -1,3 +1,4 @@
+=========================================FRonT======================================================
 ================Création du project angular========================
 ==>ng new frontend-angular --directory=./ --no-standalone
 ==>CSS
@@ -8,3 +9,16 @@
 ==>Indigo/Pink
 ==>Set up global Angular Material typography styles? Yes
 ==>Include the Angular animations module? Include and enable animations
+
+
+=========================================BAck================================================
+Document swagger
+==>http://localhost:8021/swagger-ui/index.htm
+h2 bd
+==>http://localhost:8021/h2-console/
+==>jdbc:h2:mem:students-db
+Doc swagger
+==>https://springdoc.org/
+
+Book Social Network (Full web application | Spring boot | Angular | Docker | Keycloack)
+==>https://www.youtube.com/watch?v=WuPa_XoWlJU&ab_channel=BoualiAli

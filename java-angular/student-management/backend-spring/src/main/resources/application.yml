@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: backend-student-management
+  datasource:
+    url: jdbc:h2:mem:students-db
+  h2:
+    console:
+      enabled: true
+server:
+  port: 8021

@@ -1,3 +1,11 @@
 .spacer {
   flex: auto;
 }
+
+.active-link {
+  background-color: #4098dc; /* Changez cette couleur selon vos besoins */
+}
+
+.mat-list-item.active-link {
+  background-color: #d3d3d3; /* Assurez-vous que cela s'applique directement à l'élément mat-list-item */
+}

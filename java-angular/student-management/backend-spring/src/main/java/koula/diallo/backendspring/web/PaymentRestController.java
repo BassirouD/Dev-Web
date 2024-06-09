@@ -1,10 +1,10 @@
 package koula.diallo.backendspring.web;
 
+import koula.diallo.backendspring.dtos.NewPaymentDTO;
 import koula.diallo.backendspring.entities.Payment;
 import koula.diallo.backendspring.entities.PaymentStatus;
 import koula.diallo.backendspring.entities.PaymentType;
 import koula.diallo.backendspring.repositories.PaymentRepo;
-import koula.diallo.backendspring.repositories.StudentRepo;
 import koula.diallo.backendspring.services.PaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
-
+@CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
 public class PaymentRestController {
@@ -51,12 +51,8 @@ public class PaymentRestController {
 
     @PostMapping(path = "/payments", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Payment savePayment(
-            @RequestParam MultipartFile file,
-            LocalDate date,
-            double amount,
-            PaymentType paymentType,
-            String studentCode) throws IOException {
-        return paymentService.savePayment(file, date, amount, paymentType, studentCode);
+            @RequestParam("file") MultipartFile file, NewPaymentDTO newPaymentDTO) throws IOException {
+        return paymentService.savePayment(file, newPaymentDTO);
     }
 
     @GetMapping(path = "/paymentFile/{paymentId}", produces = MediaType.APPLICATION_PDF_VALUE)

@@ -31,6 +31,15 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {AuthGuard} from "./guards/auth.guard";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AuthorizationGuard} from "./guards/authorization.guard";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {StudentDetailsComponent} from './student-details/student-details.component';
+import {NewPaymentComponent} from './new-payment/new-payment.component';
+import {MatDatepicker, MatDatepickerModule, MatDatepickerToggle} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
+import {MatSelectModule} from "@angular/material/select";
+import {PdfViewerModule} from "ng2-pdf-viewer";
+import {MatProgressSpinner, MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { PaymentDetailsComponent } from './payment-details/payment-details.component';
 
 @NgModule({
   declarations: [
@@ -43,30 +52,39 @@ import {AuthorizationGuard} from "./guards/authorization.guard";
     StudentsComponent,
     PaymentsComponent,
     LoadStudentsComponent,
-    LoadPaymentsComponent
+    LoadPaymentsComponent,
+    StudentDetailsComponent,
+    NewPaymentComponent,
+    PaymentDetailsComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        MatToolbarModule,
-        MatButtonModule,
-        MatIconModule,
-        MatMenuModule,
-        MatSidenavModule,
-        MatNavList,
-        MatListItem,
-        MatCardModule,
-        MatDividerModule,
-        MatTableModule,
-        MatPaginator,
-        MatSort,
-        MatSortHeader,
-        MatInput,
-        MatFormFieldModule,
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
-        MatList
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    MatSidenavModule,
+    MatNavList,
+    MatListItem,
+    MatCardModule,
+    MatDividerModule,
+    MatTableModule,
+    MatPaginator,
+    MatSort,
+    MatSortHeader,
+    MatInput,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatList,
+    HttpClientModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    PdfViewerModule,
+    MatProgressSpinnerModule
+  ],
   providers: [
     AuthGuard, AuthorizationGuard
   ],

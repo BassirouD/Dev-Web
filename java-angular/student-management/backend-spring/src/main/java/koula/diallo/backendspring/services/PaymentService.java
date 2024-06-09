@@ -1,5 +1,6 @@
 package koula.diallo.backendspring.services;
 
+import koula.diallo.backendspring.dtos.NewPaymentDTO;
 import koula.diallo.backendspring.entities.Payment;
 import koula.diallo.backendspring.entities.PaymentStatus;
 import koula.diallo.backendspring.entities.PaymentType;
@@ -26,7 +27,7 @@ public class PaymentService {
     private final StudentRepo studentRepo;
     private final PaymentRepo paymentRepo;
 
-    public Payment savePayment(MultipartFile file, LocalDate date, double amount, PaymentType paymentType, String studentCode) throws IOException {
+    public Payment savePayment(MultipartFile file, NewPaymentDTO newPaymentDTO) throws IOException {
         Path folderPath = Paths.get(System.getProperty("user.home"), "students-data", "payments");
         if (!Files.exists(folderPath)) {
             Files.createDirectories(folderPath);
@@ -34,12 +35,12 @@ public class PaymentService {
         String fileName = UUID.randomUUID().toString();
         Path filePath = Paths.get(System.getProperty("user.home"), "students-data", "payments", fileName + ".pdf");
         Files.copy(file.getInputStream(), filePath);
-        Student student = studentRepo.findByCode(studentCode);
+        Student student = studentRepo.findByCode(newPaymentDTO.getStudentCode());
         Payment payment = Payment.builder()
-                .date(date)
-                .paymentType(paymentType)
+                .date(newPaymentDTO.getDate())
+                .paymentType(newPaymentDTO.getPaymentType())
                 .student(student)
-                .amount(amount)
+                .amount(newPaymentDTO.getAmount())
                 .file(filePath.toUri().toString())
                 .paymentStatus(PaymentStatus.CREATED)
                 .build();

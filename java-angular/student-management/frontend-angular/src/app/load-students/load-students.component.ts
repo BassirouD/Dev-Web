@@ -3,47 +3,53 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {Router} from "@angular/router";
+import {StudentsService} from "../services/students.service";
+import {Student} from "../models/student.model";
 
 @Component({
   selector: 'app-load-students',
   templateUrl: './load-students.component.html',
   styleUrl: './load-students.component.css'
 })
-export class LoadStudentsComponent implements OnInit, AfterViewInit {
+export class LoadStudentsComponent implements OnInit {
 
-  public students: any[] = [];
-  public dataSource: any
-  public displayColumn = ['id', 'firstName', 'lastName', 'payments']
+  public students!: Array<Student>;
+  public dataSource!: MatTableDataSource<Student>
+  public displayColumn = ['id', 'firstName', 'lastName', 'programId', 'payments']
   @ViewChild(MatPaginator) paginator!: MatPaginator
   @ViewChild(MatSort) sort!: MatSort
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private studentSrv: StudentsService) {
 
   }
 
   ngOnInit(): void {
-    for (let i = 1; i < 100; i++) {
-      this.students.push({
-        id: i,
-        firstName: Math.random().toString(20),
-        lastName: Math.random().toString(20),
-      })
-    }
-    this.dataSource = new MatTableDataSource(this.students)
+    // for (let i = 1; i < 100; i++) {
+    //   this.students.push({
+    //     id: i,
+    //     firstName: Math.random().toString(20),
+    //     lastName: Math.random().toString(20),
+    //   })
+    // }
+    this.studentSrv.getAllStudents().subscribe({
+      next: value => {
+        this.students = value
+        this.dataSource = new MatTableDataSource<Student>(this.students)
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }, error: err => {
+        console.log(err)
+      }
+    })
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
 
   filterStudents($event: Event) {
     let value = ($event.target as HTMLInputElement).value
     this.dataSource.filter = value;
-
   }
 
-  getPayments(element: any) {
-    this.router.navigateByUrl('/payments')
+  getPayments(student: Student) {
+    this.router.navigateByUrl(`/admin/student-details/${student.code}`)
   }
 }

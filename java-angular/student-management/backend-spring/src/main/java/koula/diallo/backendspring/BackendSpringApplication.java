@@ -11,6 +11,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.time.LocalDate;
 import java.util.Random;
 import java.util.UUID;
 
@@ -62,6 +63,7 @@ public class BackendSpringApplication {
                             .amount(1000 + (int) (Math.random() * 20000))
                             .paymentType(paymentType[index])
                             .paymentStatus(PaymentStatus.CREATED)
+                            .date(LocalDate.now())
                             .student(student)
                             .build();
                     paymentRepo.save(payment);

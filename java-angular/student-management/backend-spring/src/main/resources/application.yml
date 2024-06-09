@@ -1,4 +1,7 @@
 spring:
+  mvc:
+    format:
+      date: d/M/yyyy
   application:
     name: backend-student-management
   datasource:

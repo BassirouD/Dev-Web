@@ -10,6 +10,9 @@
 ==>Set up global Angular Material typography styles? Yes
 ==>Include the Angular animations module? Include and enable animations
 
+Générer le dossier environment
+==>ng g environments
+
 
 =========================================BAck================================================
 Document swagger

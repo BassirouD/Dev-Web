@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
     let password = this.loginFormGroup.value.password;
     let auth = this.authSrv.login(username, password)
     if (auth)
-      return this.router.navigateByUrl('/admin')
+      return this.router.navigateByUrl('/admin/students')
     else
       return this.router.navigateByUrl('/login')
   }

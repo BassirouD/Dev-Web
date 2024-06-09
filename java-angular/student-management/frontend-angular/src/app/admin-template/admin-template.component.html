@@ -10,8 +10,8 @@
     Import
   </button>
   <mat-menu #importMenu>
-    <button mat-menu-item routerLink="/admin/loadStudents">Load Students</button>
-    <button mat-menu-item routerLink="/admin/loadPayments">Load Payments</button>
+    <button mat-menu-item routerLink="/admin/students">Load Students</button>
+    <button mat-menu-item routerLink="/admin/payments">Load Payments</button>
   </mat-menu>
   <button mat-button *ngIf="authSrv.authenticated">{{authSrv.username}}</button>
   <button mat-raised-button color="accent" (click)="logout()">Login</button>
@@ -19,21 +19,21 @@
 <mat-drawer-container>
   <mat-drawer #drawer mode="side" position="start" opened="true">
     <mat-list>
-      <mat-list-item>
+      <mat-list-item routerLinkActive="active-link">
         <button mat-button routerLink="/admin/dashboard">
           <mat-icon>dashboard</mat-icon>
           Dashboard
         </button>
       </mat-list-item>
-      <mat-list-item>
+      <mat-list-item routerLinkActive="active-link">
         <button mat-button routerLink="/admin/students">
-          <mat-icon>dashboard</mat-icon>
+          <mat-icon>contact_page</mat-icon>
           Students
         </button>
       </mat-list-item>
-      <mat-list-item>
+      <mat-list-item routerLinkActive="active-link">
         <button mat-button routerLink="/admin/payments">
-          <mat-icon>dashboard</mat-icon>
+          <mat-icon>credit_score</mat-icon>
           Payments
         </button>
       </mat-list-item>

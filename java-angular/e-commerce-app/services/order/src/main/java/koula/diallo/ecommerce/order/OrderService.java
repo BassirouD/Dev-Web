@@ -11,7 +11,6 @@ import koula.diallo.ecommerce.payment.PaymentClient;
 import koula.diallo.ecommerce.payment.PaymentRequest;
 import koula.diallo.ecommerce.product.ProductClient;
 import koula.diallo.ecommerce.product.PurchaseRequest;
-import koula.diallo.ecommerce.product.PurchaseResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

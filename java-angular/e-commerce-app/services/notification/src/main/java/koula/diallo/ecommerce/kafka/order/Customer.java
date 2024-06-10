@@ -2,8 +2,8 @@ package koula.diallo.ecommerce.kafka.order;
 
 public record Customer(
         String id,
-        String firstName,
-        String lastName,
+        String firstname,
+        String lastname,
         String email
 ) {
 }

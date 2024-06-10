@@ -19,8 +19,8 @@ public class PaymentService {
                         request.orderReference(),
                         request.amount(),
                         request.paymentMethod(),
-                        request.customer().firstName(),
-                        request.customer().lastName(),
+                        request.customer().firstname(),
+                        request.customer().lastname(),
                         request.customer().email()
                 )
         );

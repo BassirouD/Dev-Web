@@ -33,7 +33,7 @@ public class NotificationConsumer {
                         .build()
         );
         // todo send mail
-        var customerName = paymentConfirmation.customerFirstName() + " " + paymentConfirmation.customerLastName();
+        var customerName = paymentConfirmation.customerFirstname() + " " + paymentConfirmation.customerLastname();
         emailService.sendPaymentSuccessEmail(
                 paymentConfirmation.customerEmail(),
                 customerName,
@@ -45,6 +45,7 @@ public class NotificationConsumer {
     @KafkaListener(topics = "order-topic")
     public void consumeOrderConfirmationNotification(OrderConfirmation orderConfirmation) throws MessagingException {
         log.info(String.format("Consuming the message from order-topic Topic:: %s", orderConfirmation));
+        System.out.println(orderConfirmation);
         repository.save(
                 Notification.builder()
                         .type(NotificationType.ORDER_CONFIRMATION)
@@ -53,7 +54,7 @@ public class NotificationConsumer {
                         .build()
         );
         // todo send mail
-        var customerName = orderConfirmation.customer().firstName() + " " + orderConfirmation.customer().lastName();
+        var customerName = orderConfirmation.customer().firstname() + " " + orderConfirmation.customer().lastname();
         emailService.sendOrderConfirmationEmail(
                 orderConfirmation.customer().email(),
                 customerName,

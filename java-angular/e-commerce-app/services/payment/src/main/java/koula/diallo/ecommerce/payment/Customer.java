@@ -8,9 +8,9 @@ import org.springframework.validation.annotation.Validated;
 public record Customer(
         String id,
         @NotNull(message = "Firstname is required")
-        String firstName,
+        String firstname,
         @NotNull(message = "Lastname is required")
-        String lastName,
+        String lastname,
         @NotNull(message = "Email is required")
         @Email(message = "The customer email is not correctly formatted")
         String email

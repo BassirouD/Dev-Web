@@ -1,5 +1,6 @@
 package koula.diallo.ecommerce.order;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -9,6 +10,7 @@ import koula.diallo.ecommerce.product.PurchaseRequest;
 import java.math.BigDecimal;
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public record OrderRequest(
         Integer id,
         String reference,
@@ -16,11 +18,12 @@ public record OrderRequest(
         BigDecimal amount,
         @NotNull(message = "Payment method should be precised")
         PaymentMethod paymentMethod,
-        @NotNull(message = "Customer method should be present")
-        @NotEmpty(message = "Customer method should be present")
-        @NotBlank(message = "Customer method should be present")
+        @NotNull(message = "Customer should be present")
+        @NotEmpty(message = "Customer should be present")
+        @NotBlank(message = "Customer should be present")
         String customerId,
-        @NotNull(message = "You should at least purchase one product")
+        @NotEmpty(message = "You should at least purchase one product")
         List<PurchaseRequest> products
 ) {
+
 }

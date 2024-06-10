@@ -1,7 +1,10 @@
 package koula.diallo.ecommerce.order;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.math.BigDecimal;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public record OrderResponse(
         Integer id,
         String reference,
@@ -9,4 +12,5 @@ public record OrderResponse(
         PaymentMethod paymentMethod,
         String customerId
 ) {
+
 }

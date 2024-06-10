@@ -13,10 +13,13 @@ import java.util.List;
 @RequestMapping("/api/v1/order-lines")
 @RequiredArgsConstructor
 public class OrderLineController {
+
     private final OrderLineService service;
 
     @GetMapping("/order/{order-id}")
-    public ResponseEntity<List<OrderLineResponse>> findByOrderId(@PathVariable("order-id") Integer orderId){
+    public ResponseEntity<List<OrderLineResponse>> findByOrderId(
+            @PathVariable("order-id") Integer orderId
+    ) {
         return ResponseEntity.ok(service.findAllByOrderId(orderId));
     }
 }

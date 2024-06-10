@@ -2,13 +2,12 @@ package koula.diallo.ecommerce.email;
 
 import lombok.Getter;
 
+@Getter
 public enum EmailTemplate {
     PAYMENT_CONFIRMATION("payment-confirmation.html", "Payment successfully processed"),
     ORDER_CONFIRMATION("order-confirmation.html", "Order confirmation");
 
-    @Getter
     private final String template;
-    @Getter
     private final String subject;
 
     EmailTemplate(String template, String subject) {

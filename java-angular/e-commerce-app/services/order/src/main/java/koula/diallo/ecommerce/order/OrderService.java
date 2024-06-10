@@ -7,6 +7,8 @@ import koula.diallo.ecommerce.kafka.OrderConfirmation;
 import koula.diallo.ecommerce.kafka.OrderProducer;
 import koula.diallo.ecommerce.orderline.OrderLineRequest;
 import koula.diallo.ecommerce.orderline.OrderLineService;
+import koula.diallo.ecommerce.payment.PaymentClient;
+import koula.diallo.ecommerce.payment.PaymentRequest;
 import koula.diallo.ecommerce.product.ProductClient;
 import koula.diallo.ecommerce.product.PurchaseRequest;
 import koula.diallo.ecommerce.product.PurchaseResponse;
@@ -25,6 +27,7 @@ public class OrderService {
     private final OrderMapper mapper;
     private final OrderLineService orderLineService;
     private final OrderProducer orderProducer;
+    private final PaymentClient paymentClient;
 
     public Integer createOrder(OrderRequest request) {
         //Check the customer --> OpenFeign
@@ -34,7 +37,7 @@ public class OrderService {
         //purchase the products --> product-micro-service(RestTemplate)
         List<PurchaseResponse> purchaseProducts = productClient.purchaseProducts(request.products());
 
-        //persist the order lines
+        // todo persist the order lines
         var order = repository.save(mapper.toOrder(request));
         for (PurchaseRequest purchaseRequest : request.products()) {
             orderLineService.saveOrderLine(
@@ -47,8 +50,16 @@ public class OrderService {
             );
         }
         // todo start the payment process
+        var paymentRequest = new PaymentRequest(
+                request.amount(),
+                request.paymentMethod(),
+                order.getId(),
+                order.getReference(),
+                customer
+        );
+        paymentClient.requestOrderPayment(paymentRequest);
 
-        //send the order confirmation --> notification-micro-service(kafka)
+        // todo send the order confirmation --> notification-micro-service(kafka)
         orderProducer.sendOrderConfirmation(
                 new OrderConfirmation(
                         request.reference(),

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activation Code</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            padding: 20px;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+        }
+        .header h1 {
+            margin-bottom: 0;
+        }
+        .content {
+            margin-top: 20px;
+        }
+        .content p {
+            line-height: 1.6;
+        }
+        .content a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .content a:hover {
+            background-color: #0056b3;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Welcome, <span th:text="${username}">User</span>!</h1>
+    </div>
+    <div class="content">
+        <p>Thank you for registering with us. To complete your registration, please use the following activation code:</p>
+        <p><strong>Activation Code: <span th:text="${activation_code}"></span></strong></p>
+        <p>You can activate your account by clicking the button below:</p>
+        <a th:href="${confirmationUrl}">Activate Account</a>
+        <p>If the button above does not work, please copy and paste the following URL into your web browser:</p>
+        <p><span th:text="${confirmationUrl}" target="_blank"></span></p>
+    </div>
+    <div class="footer">
+        <p>If you did not create an account using this email address, please ignore this email.</p>
+        <p>Regards, <br> The Koula Team</p>
+    </div>
+</div>
+</body>
+</html>

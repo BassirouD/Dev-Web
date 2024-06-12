@@ -1,0 +1,34 @@
+services:
+    postgres:
+        container_name: ms_pg_sql
+        image: postgres
+        environment:
+            POSTGRES_USER: root
+            POSTGRES_PASSWORD: root
+            PGDATA: /var/lib/postgresql/data
+            POSTGRES_DB: boot_social_network
+        volumes:
+            - postgres:/var/lib/postgres
+        ports:
+            - "5433:5432"
+        networks:
+            - social-app-net
+        restart: unless-stopped
+
+    mail-dev:
+        container_name: ms_mail_dev
+        image: maildev/maildev
+        ports:
+            - "1080:1080"
+            - "1025:1025"
+        networks:
+            - social-app-net
+
+networks:
+    social-app-net:
+        driver: bridge
+
+
+volumes:
+    postgres:
+        driver: local

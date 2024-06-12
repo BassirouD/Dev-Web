@@ -1,0 +1,82 @@
+openapi: 3.0.3
+info:
+  description: e_commerce_app API
+  title: e_commerce_app API
+  version: 1.0.0
+servers:
+- url: https://e_commerce_app
+paths:
+  /api/v1/orders:
+    post:
+      operationId: createOrder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                format: int32
+                type: integer
+          description: OK
+      summary: POST api/v1/orders
+      x-content-type: application/json
+      x-accepts: '*/*'
+components:
+  schemas:
+    BigDecimal:
+      properties: {}
+      type: object
+    PurchaseRequest:
+      example:
+        quantity: 1.4658129805029452
+        productId: 6
+      properties:
+        productId:
+          format: int32
+          type: integer
+        quantity:
+          format: double
+          type: number
+      type: object
+    OrderRequest:
+      example:
+        reference: reference
+        amount: "{}"
+        customerId: customerId
+        paymentMethod: PAYPAL
+        id: 0
+        products:
+        - quantity: 1.4658129805029452
+          productId: 6
+        - quantity: 1.4658129805029452
+          productId: 6
+      properties:
+        id:
+          format: int32
+          type: integer
+        reference:
+          type: string
+        amount:
+          properties: {}
+          type: object
+        paymentMethod:
+          enum:
+          - PAYPAL
+          - CREDIT_CARD
+          - VISA
+          - MASTER_CARD
+          - BITCOIN
+          type: string
+        customerId:
+          type: string
+        products:
+          items:
+            $ref: '#/components/schemas/PurchaseRequest'
+          type: array
+      type: object
+

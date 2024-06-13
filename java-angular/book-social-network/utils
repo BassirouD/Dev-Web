@@ -1,0 +1,8 @@
+=============================ng-openapi-gen: An OpenAPI 3 code generator for Angular==========================
+===>npm i ng-openapi-gen
+==>copy the content of your api-doc(swagger)==http://localhost:8088/api/v1/v3/api-docs
+    and paste it in a file named for example: src/openapi/openapi.json(angular project)
+==>add following command in package.json(scripts)
+==>"api-gen": "ng-openapi-gen --input ./src/openapi/openapi.json --output ./src/app/services"
+==>and run: npm run api-gen. to generate services
+

@@ -1,5 +1,6 @@
 package koula.diallo.book.book;
 
+import koula.diallo.book.file.FileUtils;
 import koula.diallo.book.history.BookTransactionHistory;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,7 @@ public class BookMapper {
                 .shareable(book.isShareable())
                 .owner(book.getOwner().fullName())
                 //todo implement this later
-                //.cover()
+                .cover(FileUtils.readFileFromLocation(book.getBookCover()))
                 .build();
     }
 

@@ -1,2 +1,24 @@
-package koula.diallo.book.config;public class ApplicationAuditAware {
+package koula.diallo.book.config;
+
+import koula.diallo.book.user.User;
+import org.springframework.data.domain.AuditorAware;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
+import java.util.Optional;
+
+//<Integer> Because, in base entity, id is Integer
+public class ApplicationAuditAware implements AuditorAware<Integer> {
+    @Override
+    public Optional<Integer> getCurrentAuditor() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null
+                || !authentication.isAuthenticated()
+                || authentication instanceof AnonymousAuthenticationToken) {
+            return Optional.empty();
+        }
+        User userPrincipal = (User) authentication.getPrincipal();
+        return Optional.ofNullable(userPrincipal.getId());
+    }
 }

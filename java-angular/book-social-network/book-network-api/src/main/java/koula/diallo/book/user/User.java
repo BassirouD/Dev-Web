@@ -1,6 +1,8 @@
 package koula.diallo.book.user;
 
 import jakarta.persistence.*;
+import koula.diallo.book.book.Book;
+import koula.diallo.book.history.BookTransactionHistory;
 import koula.diallo.book.role.Role;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -39,6 +41,11 @@ public class User implements UserDetails, Principal {
     private boolean enable;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
+    @OneToMany(mappedBy = "owner")
+    private List<Book> books;
+
+    @OneToMany(mappedBy = "user")
+    private List<BookTransactionHistory> histories;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

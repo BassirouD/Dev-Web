@@ -9,5 +9,15 @@
 ===========================Activation account implementation================================
 ==>add dep: npm i angular-code-input
 
-
+============================Interceptor===================================
+to add interceptor to intercept all request going out from the front to backend
+==>(services): ng g interceptor http-token
+==> implement it
+==> and in the module app providers[
+    {
+          provide: HTTP_INTERCEPTORS,
+          useClass: HttpTokenInterceptor,
+          multi:true
+        }
+]
 

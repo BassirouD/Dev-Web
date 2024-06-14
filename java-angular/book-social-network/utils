@@ -6,3 +6,8 @@
 ==>"api-gen": "ng-openapi-gen --input ./src/openapi/openapi.json --output ./src/app/services"
 ==>and run: npm run api-gen. to generate services
 
+===========================Activation account implementation================================
+==>add dep: npm i angular-code-input
+
+
+

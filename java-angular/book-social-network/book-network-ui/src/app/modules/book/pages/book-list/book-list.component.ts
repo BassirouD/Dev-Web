@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {BookService} from "../../../../services/services/book.service";
 import {Router} from "@angular/router";
 import {PageResponseBookResponse} from "../../../../services/models/page-response-book-response";
+import {BookResponse} from "../../../../services/models/book-response";
 
 @Component({
     selector: 'app-book-list',
@@ -11,7 +12,9 @@ import {PageResponseBookResponse} from "../../../../services/models/page-respons
 export class BookListComponent implements OnInit {
     bookResponse: PageResponseBookResponse = {};
     page: number = 0;
-    size: number = 2;
+    size: number = 3;
+    message: string = '';
+    level = 'success'
 
 
     ngOnInit(): void {
@@ -66,5 +69,20 @@ export class BookListComponent implements OnInit {
         // On peut utiliser directement cette methodes pour avoir le totalPages
         // Pour ne pas à faire [].constructor(bookResponse.totalPages) dans le html
         return new Array(this.bookResponse.totalPages);
+    }
+
+    borrowBook(book: BookResponse) {
+        this.message = ''
+        this.bookSrv.borrowBook({
+            "book-id": book.id as number
+        }).subscribe({
+            next: () => {
+                this.level = 'success'
+                this.message = 'Book successfully add to your list'
+            }, error: (err) => {
+                this.level = 'error'
+                this.message = err.error.error
+            }
+        })
     }
 }

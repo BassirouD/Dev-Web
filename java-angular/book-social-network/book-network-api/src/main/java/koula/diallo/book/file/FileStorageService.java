@@ -31,8 +31,8 @@ public class FileStorageService {
     private String uploadFile(
             @NonNull MultipartFile sourceFile,
             @NonNull String fileUploadSubPath) {
-        final String finalUploadPath = fileUploadPath + File.separator + fileUploadPath;
-        File targetFolder = new File(fileUploadSubPath);
+        final String finalUploadPath = fileUploadPath + File.separator + fileUploadSubPath;
+        File targetFolder = new File(finalUploadPath);
         if (!targetFolder.exists()) {
             boolean folderCreated = targetFolder.mkdirs();
             if (!folderCreated) {

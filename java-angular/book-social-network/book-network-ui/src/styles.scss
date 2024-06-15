@@ -7,3 +7,39 @@
   width: 800px !important;
   margin-top: 5%;
 }
+
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+}
+
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+}
+
+.alert-warning {
+  color: #fdbf19;
+  background-color: #f8d7da;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+}
+
+.page-link {
+  cursor: pointer;
+}
+
+.page-link.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+}

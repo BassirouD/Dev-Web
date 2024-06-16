@@ -21,3 +21,5 @@ to add interceptor to intercept all request going out from the front to backend
         }
 ]
 
+=========================Decode token===========================
+==>npm i @auth0/angular-jwt

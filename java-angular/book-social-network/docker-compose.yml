@@ -9,6 +9,7 @@ services:
             POSTGRES_DB: boot_social_network
         volumes:
             - postgres:/var/lib/postgres
+            - ./init.sql:/docker-entrypoint-initdb.d/init.sql
         ports:
             - "5433:5432"
         networks:
@@ -23,6 +24,25 @@ services:
             - "1025:1025"
         networks:
             - social-app-net
+    bsn-api:
+        container_name: bsn-api
+        image: bsn/bsn:1.0.3
+        ports:
+            - 8088:8088
+        networks:
+            - social-app-net
+        depends_on:
+            - postgres
+
+    bsn-ui:
+        container_name: bsn-ui
+        image: bsn/bsn-ui:1.0.0
+        ports:
+            - 8080:80
+        networks:
+            - social-app-net
+        depends_on:
+            - bsn-api
 
 networks:
     social-app-net:

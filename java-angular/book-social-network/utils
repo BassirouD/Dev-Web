@@ -23,3 +23,7 @@ to add interceptor to intercept all request going out from the front to backend
 
 =========================Decode token===========================
 ==>npm i @auth0/angular-jwt
+
+===========================Backend/Frontend dockerfile==================
+==> book-network-api>: docker build -t bsn/bsn:1.0.0 -f ../docker/backend/Dockerfile .
+==> book-network-ui>: docker build -t bsn/bsn-ui:1.0.0 -f ../docker/frontend/Dockerfile .

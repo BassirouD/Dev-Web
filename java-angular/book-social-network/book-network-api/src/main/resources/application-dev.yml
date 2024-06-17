@@ -15,7 +15,7 @@ spring:
                 format_sql: true
 
     mail:
-        host: localhost
+        host: msn_mail_dev
         port: 1025
         username: root
         password: root

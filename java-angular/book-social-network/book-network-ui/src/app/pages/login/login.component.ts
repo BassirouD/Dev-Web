@@ -5,41 +5,42 @@ import {AuthenticationService} from "../../services/services/authentication.serv
 import {TokenService} from "../../services/token/token.service";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  authRequest: AuthenticationRequest = {email: 'tata@book-social.com', password: 'password11'}
-  errMsg: Array<string> = [];
+    authRequest: AuthenticationRequest = {email: '', password: 'password11'}
+    errMsg: Array<string> = [];
 
-  constructor(private router: Router,
-              private authSrv: AuthenticationService,
-              private tokenSrv: TokenService
-  ) {
-  }
+    constructor(private router: Router,
+                private authSrv: AuthenticationService,
+                private tokenSrv: TokenService
+    ) {
+    }
 
-  login() {
-    this.errMsg = [];
-    this.authSrv.authenticate({
-      body: this.authRequest
-    }).subscribe({
-      next: (res) => {
-        this.tokenSrv.token = res.token as string
-        this.router.navigate(['books'])
-      },
-      error: (err) => {
-        console.log(err)
-        if (err.error.validationErrors) {
-          this.errMsg = err.error.validationErrors
-        } else {
-          this.errMsg.push(err.error.error)
-        }
-      }
-    })
-  }
+    login() {
+        this.errMsg = [];
+        this.authSrv.authenticate({
+            body: this.authRequest
+        }).subscribe({
+            next: (res) => {
+                this.tokenSrv.token = res.token as string
+                console.log('----------------->', this.tokenSrv.username)
+                this.router.navigate(['books'])
+            },
+            error: (err) => {
+                console.log(err)
+                if (err.error.validationErrors) {
+                    this.errMsg = err.error.validationErrors
+                } else {
+                    this.errMsg.push(err.error.error)
+                }
+            }
+        })
+    }
 
-  register() {
-    this.router.navigate(['register'])
-  }
+    register() {
+        this.router.navigate(['register'])
+    }
 }

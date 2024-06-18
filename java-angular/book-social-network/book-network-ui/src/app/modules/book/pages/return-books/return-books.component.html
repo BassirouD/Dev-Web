@@ -1,7 +1,10 @@
 <h2>Return books</h2>
 <hr>
-<div *ngIf="message" [class.alert-success]="level=='success'" [class.alert-danger]="level=='error'">
-    {{message}}
+<div class="d-flex justify-content-between" *ngIf="message" [class.alert-success]="level=='success'" [class.alert-danger]="level=='error'">
+    <div>{{message}}</div>
+    <div>
+        <i (click)="message=''" class="fas fa-close"></i>
+    </div>
 </div>
 <div>
     <table class="table">

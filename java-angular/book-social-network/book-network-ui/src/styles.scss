@@ -2,6 +2,9 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 
+i{
+  cursor: pointer;
+}
 
 .login-container {
   width: 800px !important;

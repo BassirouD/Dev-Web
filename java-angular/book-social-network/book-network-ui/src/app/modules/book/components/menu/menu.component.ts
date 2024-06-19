@@ -8,11 +8,15 @@ import {TokenService} from "../../../../services/token/token.service";
 })
 export class MenuComponent implements OnInit {
     username!: string
+    isAdmin: boolean = false
 
-    constructor(private tokenSrv: TokenService) {
+    constructor(public tokenSrv: TokenService) {
     }
 
     ngOnInit(): void {
+        if (localStorage.getItem('isAdmin') == 'true') {
+            this.isAdmin = true
+        }
         this.username = this.tokenSrv.fullName as string
         const linkColor = document.querySelectorAll('.nav-link');
         linkColor.forEach(link => {

@@ -14,7 +14,7 @@ interface JwtPayload {
 })
 export class TokenService {
     public username!: string;
-
+    roles!: Array<string>;
 
     constructor() {
     }
@@ -23,9 +23,18 @@ export class TokenService {
         let jwtHelper = new JwtHelperService();
         let objJWT = jwtHelper.decodeToken(jwt);
         this.username = objJWT?.fullName;
+        this.roles = objJWT?.authorities;
+        this.isAdmin()
     }
 
-    get fullName(){
+    isAdmin() {
+        if (this.roles.indexOf('ADMIN') >= 0) {
+            localStorage.setItem('isAdmin', 'true')
+        }
+        return this.roles.indexOf('ADMIN') >= 0;
+    }
+
+    get fullName() {
         return localStorage.getItem('username')
     }
 

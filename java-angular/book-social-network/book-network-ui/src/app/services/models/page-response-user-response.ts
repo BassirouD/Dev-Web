@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
-import { BorrowedBookResponse } from '../models/borrowed-book-response';
-export interface PageResponseBorrowedBookResponse {
-  content?: Array<BorrowedBookResponse>;
+import { UserResponse } from '../models/user-response';
+export interface PageResponseUserResponse {
+  content?: Array<UserResponse>;
   first?: boolean;
   last?: boolean;
   number?: number;

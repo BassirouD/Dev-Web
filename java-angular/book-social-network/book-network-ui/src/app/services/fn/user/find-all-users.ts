@@ -6,17 +6,18 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { RegistrationRequest } from '../../models/registration-request';
+import { PageResponseUserResponse } from '../../models/page-response-user-response';
 
-export interface Register$Params {
-      body: RegistrationRequest
+export interface FindAllUsers$Params {
+  page?: number;
+  size?: number;
 }
 
-export function register(http: HttpClient, rootUrl: string, params: Register$Params, context?: HttpContext): Observable<StrictHttpResponse<{
-}>> {
-  const rb = new RequestBuilder(rootUrl, register.PATH, 'post');
+export function findAllUsers(http: HttpClient, rootUrl: string, params?: FindAllUsers$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseUserResponse>> {
+  const rb = new RequestBuilder(rootUrl, findAllUsers.PATH, 'get');
   if (params) {
-    rb.body(params.body, 'application/json');
+    rb.query('page', params.page, {});
+    rb.query('size', params.size, {});
   }
 
   return http.request(
@@ -24,10 +25,9 @@ export function register(http: HttpClient, rootUrl: string, params: Register$Par
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<{
-      }>;
+      return r as StrictHttpResponse<PageResponseUserResponse>;
     })
   );
 }
 
-register.PATH = '/auth/register';
+findAllUsers.PATH = '/manage';

@@ -9,7 +9,7 @@ services:
             POSTGRES_DB: boot_social_network
         volumes:
             - postgres:/var/lib/postgres
-            #- ./init.sql:/docker-entrypoint-initdb.d/init.sql
+            - ./init.sql:/docker-entrypoint-initdb.d/init.sql
         ports:
             - "5433:5432"
         networks:

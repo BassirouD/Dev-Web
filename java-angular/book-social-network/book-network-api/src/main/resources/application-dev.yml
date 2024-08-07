@@ -1,6 +1,6 @@
 spring:
     datasource:
-        url: jdbc:postgresql://localhost:5432/boot_social_network
+        url: jdbc:postgresql://sn_pg_sql:5432/boot_social_network
         username: postgres
         password: toor
         driver-class-name: org.postgresql.Driver
@@ -15,7 +15,7 @@ spring:
                 format_sql: true
 
     mail:
-        host: localhost
+        host: msn_mail_dev
         port: 1025
         username: root
         password: root

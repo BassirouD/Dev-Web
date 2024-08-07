@@ -10,7 +10,7 @@
     </parent>
     <groupId>koula.diallo</groupId>
     <artifactId>book-network</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.2</version>
     <name>book-network-api</name>
     <description>book-network-api</description>
     <properties>

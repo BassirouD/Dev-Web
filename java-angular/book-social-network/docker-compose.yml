@@ -26,7 +26,7 @@ services:
             - social-app-net
     bsn-api:
         container_name: bsn-api
-        image: bsn/bsn:1.0.3
+        image: bsn/bsn:1.0.2
         ports:
             - 8088:8088
         networks:
@@ -36,7 +36,7 @@ services:
 
     bsn-ui:
         container_name: bsn-ui
-        image: bsn/bsn-ui:1.0.0
+        image: bsn/bsn-ui:1.0.2
         ports:
             - 8080:80
         networks:

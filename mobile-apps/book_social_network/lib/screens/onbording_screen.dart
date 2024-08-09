@@ -1,3 +1,4 @@
+import 'package:book_social_network/screens/constants.dart';
 import 'package:book_social_network/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
@@ -63,7 +64,7 @@ class OnbordingScreen extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size.fromHeight(55),
-                backgroundColor: const Color(0xFF2025DE),
+                backgroundColor: kprimaryColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -84,19 +85,19 @@ class OnbordingScreen extends StatelessWidget {
         "Back",
         style: TextStyle(
           fontWeight: FontWeight.w600,
-          color: Color(0xFF2025DE),
+          color: kprimaryColor,
         ),
       ),
       next: const Text(
         "Next",
         style: TextStyle(
           fontWeight: FontWeight.w600,
-          color: Color(0xFF2025DE),
+          color: kprimaryColor,
         ),
       ),
       dotsDecorator: const DotsDecorator(
         // size: Size.square(10),
-        activeColor: Color(0xFF2025DE),
+        activeColor: kprimaryColor,
         /*
         spacing: const EdgeInsets.symmetric(
           horizontal: 3,

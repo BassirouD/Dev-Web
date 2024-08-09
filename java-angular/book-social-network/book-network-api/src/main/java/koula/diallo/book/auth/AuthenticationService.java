@@ -10,13 +10,14 @@ import koula.diallo.book.user.TokenRepository;
 import koula.diallo.book.user.User;
 import koula.diallo.book.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
@@ -26,6 +27,9 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
+    Logger logger = LoggerFactory.getLogger(AuthenticationService.class);
+
+
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
@@ -36,10 +40,14 @@ public class AuthenticationService {
     @Value("${application.mailing.frontend.activation_url}")
     private String activationUrl;
 
+
     public void register(RegistrationRequest request) throws MessagingException {
         var userRole = roleRepository.findByName("USER")
                 // todo - better exception handling
-                .orElseThrow(() -> new IllegalStateException("Role USER was not initialized"));
+                .orElseThrow(() ->{
+                    logger.warn("User already exists");
+                    return  new IllegalStateException("Role USER was not initialized");
+                });
         var user = User.builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
@@ -50,6 +58,7 @@ public class AuthenticationService {
                 .roles(List.of(userRole))
                 .build();
         userRepository.save(user);
+        logger.info("User saved");
         sendValidationEmail(user);
     }
 
@@ -101,6 +110,7 @@ public class AuthenticationService {
         var user = ((User) auth.getPrincipal());
         claims.put("fullName", user.fullName());
         var jwtToken = jwtService.generateToken(claims, user);
+        logger.info("User authenticate");
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
@@ -113,6 +123,7 @@ public class AuthenticationService {
                 .orElseThrow(() -> new RuntimeException("Invalid token"));
         if (LocalDateTime.now().isAfter(savedToken.getExpireAt())) {
             sendValidationEmail(savedToken.getUser());
+            logger.warn("Activation token has expired. A new token has been sent to the same email address");
             throw new RuntimeException("Activation token has expired. A new token has been sent to the same email address");
         }
         var user = userRepository.findById(savedToken.getUser().getId())
@@ -121,5 +132,6 @@ public class AuthenticationService {
         userRepository.save(user);
         savedToken.setValidatedAt(LocalDateTime.now());
         tokenRepository.save(savedToken);
+        logger.info("Account activated");
     }
 }

@@ -1,12 +1,12 @@
 spring:
     datasource:
-        url: jdbc:postgresql://sn_pg_sql:5432/boot_social_network
+        url: jdbc:postgresql://localhost:5433/book_social_network
         username: postgres
         password: toor
         driver-class-name: org.postgresql.Driver
     jpa:
         hibernate:
-            ddl-auto: update
+            ddl-auto: create
         database: postgresql
         database-platform: org.hibernate.dialect.PostgreSQLDialect
         show-sql: false
@@ -15,7 +15,7 @@ spring:
                 format_sql: true
 
     mail:
-        host: msn_mail_dev
+        host: localhost
         port: 1025
         username: root
         password: root

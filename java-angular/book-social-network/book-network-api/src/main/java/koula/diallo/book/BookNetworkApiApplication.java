@@ -70,6 +70,20 @@ public class BookNetworkApiApplication {
                 byEmail.setRoles(roles);
                 userRepository.save(byEmail);
             }
+            if (userRepository.findByEmail("toto@email.com").isEmpty()) {
+                service.register(
+                        RegistrationRequest.builder()
+                                .firstname("Toto")
+                                .lastname("Diallo")
+                                .email("toto@email.com")
+                                .password("password11")
+                                .build());
+                var byEmail = userRepository.findByFirstname("USER");
+                var roles = roleRepository.findAll();
+                byEmail.setEnable(false);
+                byEmail.setRoles(roles);
+                userRepository.save(byEmail);
+            }
         };
     }
 

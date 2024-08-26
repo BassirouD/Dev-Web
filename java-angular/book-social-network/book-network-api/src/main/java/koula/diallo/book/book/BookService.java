@@ -1,6 +1,7 @@
 package koula.diallo.book.book;
 
 import jakarta.persistence.EntityNotFoundException;
+import koula.diallo.book.auth.AuthenticationService;
 import koula.diallo.book.common.PageResponse;
 import koula.diallo.book.exceptions.OperationNotPermittedException;
 import koula.diallo.book.file.FileStorageService;
@@ -8,6 +9,8 @@ import koula.diallo.book.history.BookTransactionHistory;
 import koula.diallo.book.history.BookTransactionHistoryRepository;
 import koula.diallo.book.user.User;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +30,8 @@ public class BookService {
     private final BookTransactionHistoryRepository bookTransactionHistoryRepository;
     private final FileStorageService fileStorageService;
 
+    Logger logger = LoggerFactory.getLogger(AuthenticationService.class);
+
     public Integer save(BookRequest request, Authentication connectedUser) {
         User user = ((User) connectedUser.getPrincipal());
         Book book = bookMapper.toBook(request);
@@ -44,6 +49,7 @@ public class BookService {
 
     public PageResponse<BookResponse> findAllBooks(int page, int size, Authentication connectedUser) {
         User user = ((User) connectedUser.getPrincipal());
+        logger.info(user.fullName());
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdDate").descending());
         Page<Book> books = bookRepository.findAllDisplayableBooks(pageable, user.getId());
         List<BookResponse> bookResponses = books.stream()

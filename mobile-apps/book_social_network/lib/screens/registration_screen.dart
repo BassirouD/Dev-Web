@@ -1,80 +1,75 @@
+import 'package:book_social_network/models/registration_request.dart';
 import 'package:book_social_network/providers/auth_provider.dart';
-import 'package:book_social_network/screens/bottom_bar_screen.dart';
 import 'package:book_social_network/screens/constants.dart';
-import 'package:book_social_network/screens/registration_screen.dart';
+import 'package:book_social_network/screens/login_screen.dart';
+import 'package:book_social_network/screens/otp_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegistrationScreen extends StatefulWidget {
+  const RegistrationScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegistrationScreen> createState() => _RegistrationScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegistrationScreenState extends State<RegistrationScreen> {
   bool _obscureText = true;
   bool _isLoading = false;
 
-  final _emailController = TextEditingController(text: 'toto@email.com');
-  final _passwordController = TextEditingController(text: 'password11');
+  final _firstnameController = TextEditingController(text: '');
+  final _lastnameController = TextEditingController(text: '');
+  final _emailController = TextEditingController(text: '');
+  final _passwordController = TextEditingController(text: '');
 
-  void _login(BuildContext context) async {
-    setState(() {
-      _isLoading = true; // Démarrer le chargement
-    });
-
-    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+  void register(BuildContext context) async {
+    final String firstname = _firstnameController.text.trim();
+    final String lastname = _lastnameController.text.trim();
+    final String email = _emailController.text.trim();
+    final String password = _passwordController.text.trim();
+    if (firstname.isEmpty ||
+        lastname.isEmpty ||
+        email.isEmpty ||
+        password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Please fill all fields',
+            style: TextStyle(color: Colors.black),
+          ),
+          backgroundColor: CupertinoColors.systemYellow,
+        ),
+      );
+      return;
+    }
     try {
-      await authProvider.login(
-        _emailController.text,
-        _passwordController.text,
-      );
+      final registrationRequest = RegistrationRequest(
+          firstname: firstname,
+          lastname: lastname,
+          email: email,
+          password: password);
+      await Provider.of<AuthProvider>(context, listen: false)
+          .register(registrationRequest);
+      // Rediriger après succès
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text(
-            'Login successful!',
-            style: TextStyle(color: Colors.white), // Couleur du texte
+        const SnackBar(
+          content: Text(
+            'Your account has been successfully created. \nNow you can process to activate account',
           ),
-          backgroundColor: Colors.green, // Couleur d'arrière-plan
-          behavior: SnackBarBehavior.floating, // Fait flotter le SnackBar
-          margin:
-              const EdgeInsets.only(bottom: 100.0), // Marge au bas de l'écran
-          shape: RoundedRectangleBorder(
-            // Forme du SnackBar
-            borderRadius: BorderRadius.circular(10),
-          ),
-          elevation: 6.0, // Élévation pour l'effet d'ombre
-          duration: const Duration(seconds: 3), // Durée d'affichage du SnackBar
+          backgroundColor: Colors.green,
         ),
       );
-      Navigator.pop(context);
       Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const BottomBarScreen(),
-        ),
-      );
+          context, MaterialPageRoute(builder: (context) => const OtpScreen()));
     } catch (e) {
-      final errorMessage = e.toString().replaceFirst('Exception: ', '');
+      // Gérer les erreurs
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(errorMessage),
-          behavior: SnackBarBehavior.floating,
+          content: Text('Failed to register: $e'),
           backgroundColor: Colors.red,
-          margin: const EdgeInsets.only(bottom: 100.0),
-          shape: RoundedRectangleBorder(
-            // Forme du SnackBar
-            borderRadius: BorderRadius.circular(10),
-          ),
-          elevation: 6.0,
-          duration: const Duration(seconds: 3),
         ),
       );
-    } finally {
-      setState(() {
-        _isLoading = false; // Arrêter le chargement
-      });
     }
   }
 
@@ -99,6 +94,26 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Column(
                   children: [
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: "Enter FirstName",
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.email),
+                      ),
+                      keyboardType: TextInputType.emailAddress,
+                      controller: _firstnameController,
+                    ),
+                    const SizedBox(height: 15),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: "Enter LastName",
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.email),
+                      ),
+                      keyboardType: TextInputType.emailAddress,
+                      controller: _lastnameController,
+                    ),
+                    const SizedBox(height: 15),
                     TextFormField(
                       decoration: const InputDecoration(
                         labelText: "Enter Email",
@@ -126,24 +141,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          "Forgot Password?",
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: kprimaryColor,
-                          ),
-                        ),
-                      ),
-                    ),
                     const SizedBox(height: 20),
                     _isLoading // Afficher l'indicateur de chargement ou le bouton
                         ? const CircularProgressIndicator()
                         : ElevatedButton(
-                            onPressed: () => _login(context),
+                            onPressed: () => register(context),
                             style: ElevatedButton.styleFrom(
                               minimumSize: const Size.fromHeight(50),
                               backgroundColor: kprimaryColor,
@@ -152,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                             child: const Text(
-                              "Log In",
+                              "Create an account",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
@@ -166,7 +168,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text(
-                          "Don't have an account? ",
+                          "Already have an account? ",
                           style: TextStyle(
                             fontSize: 15,
                             color: Colors.black54,
@@ -177,13 +179,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    const RegistrationScreen(),
+                                builder: (context) => const LoginScreen(),
                               ),
                             );
                           },
                           child: const Text(
-                            "Sign Up",
+                            "Log In",
                             style: TextStyle(
                               fontSize: 16,
                               color: kprimaryColor,

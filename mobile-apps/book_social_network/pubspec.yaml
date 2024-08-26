@@ -35,6 +35,11 @@ dependencies:
   http:
   provider:
   snippet_coder_utils:
+  fan_carousel_image_slider: ^1.0.1
+  shared_preferences:
+  image_picker:
+  jwt_decoder:
+  sms_otp_auto_verify:
 
 
   # The following adds the Cupertino Icons font to your application.
